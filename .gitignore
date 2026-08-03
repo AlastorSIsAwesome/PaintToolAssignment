@@ -1,4 +1,6 @@
 # Additions
+.Debug/
+.Release/
 .vs/
 .x64/
 .x86/
@@ -72,3 +74,7 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+Messing Around With SFML/Release
+Messing Around With SFML/Debug
+Messing Around With SFML/include
+Messing Around With SFML/lib
