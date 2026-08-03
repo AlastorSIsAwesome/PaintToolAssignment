@@ -1,16 +1,24 @@
 #include "ShapeMath.h"
 
-sf::Vector2f ResizeRect(sf::Vector2f _origin)
+void ResizeRect(sf::RectangleShape& _rect, sf::Vector2f _mouse)
 {
-	//Get mosue position and convert to Vector2f
-	sf::Vector2f MousePosition(sf::Mouse::getPosition()); // this vector is relative to the Desktop
+	//
+	// get origin and mouse vector
+	// 
+	// do trig to get hypotonuse of triangle
+	// 
+	// set shape size to result
+	//
 
-	// A = origin
-	// B = mouse location
-	// size vector = xB - xA, yB - yA
 
-	sf::Vector2f ResizeVector = {(MousePosition.x - _origin.x),(MousePosition.y - _origin.y)};
+	sf::Vector2f _reSize;
 
+	_reSize.y = (_mouse.y - _rect.getOrigin().y);
+	_reSize.x = (_mouse.x - _rect.getOrigin().x);
+	//float _cSquared = ((_a*_a) + (_b*_b));
 
-	return ResizeVector;
+	// a = y2 - y1 ... b = x2 - x1 ... c = sqrt(sqr(a) + sqr(b))
+	//float LineBetweenOriginAndMouse = ( + );
+
+	_rect.setSize(_reSize);
 }

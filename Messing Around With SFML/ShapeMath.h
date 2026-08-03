@@ -10,4 +10,4 @@
 /// </summary>
 /// <param name="_origin"> The origin of the shape (Vector2f) </param>
 /// <returns></returns>
-sf::Vector2f ResizeRect(sf::Vector2f _origin); 
+void ResizeRect(sf::RectangleShape& _rect, sf::Vector2f _mouse);

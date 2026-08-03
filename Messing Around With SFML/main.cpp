@@ -13,14 +13,16 @@ int main()
     // Texture Setting
     sf::Texture PlayerTexture;
     PlayerTexture.loadFromFile("textures/alastorsphere.png");
-
-
     Player.setTexture(&PlayerTexture);
 
-    bool CurrentlyDrawing = false;
-    //bool CurrentlyResizing = false;
+    // gets size of window and sets drawable area to that
+    sf::RenderTexture BackgroundTexture{ window.getSize() };
+    sf::Sprite CanvasSprite(BackgroundTexture.getTexture());
 
-    // pointer array to keep track of shapes
+    bool CurrentlyDrawing = false;
+    bool CurrentlyResizing = false;
+
+   // pointer array to keep track of shapes
    // sf::Shape* pShapeArray = new sf::Shape*[0];
 
    // sf::Shape test[1] = ;
@@ -29,6 +31,8 @@ int main()
 
 
     sf::RenderTexture; 
+
+    int numOfRects = 0;
 
     while (window.isOpen())
     {
@@ -47,37 +51,49 @@ int main()
 
 
 
-
+            // check if drawing/resizing
             if (const auto* keyPressed = event->getIf < sf::Event::MouseButtonPressed>())
             {
-                CurrentlyDrawing = true;
+                CurrentlyResizing = true;
             }
 
             if (const auto* keyPressed = event->getIf < sf::Event::MouseButtonReleased>())
             {
-                CurrentlyDrawing = false;
+                CurrentlyResizing = false;
             }
            
+            // check if trying to exit
+            if (const auto* keypressed = event->getIf<sf::Event::KeyPressed>())
+            {
+                if (keypressed->scancode == sf::Keyboard::Scan::Escape)
+                {
+                    printf("You are trying to exit");
+                }
+            }
 
 
         }
 
+
+        if (CurrentlyResizing)
+        {
+            numOfRects++;
+            sf::RectangleShape Testing;
+            ResizeRect(Player, (sf::Vector2f(sf::Mouse::getPosition(window))));
+            BackgroundTexture.draw(Player);
+        }
 
         if (CurrentlyDrawing)
         {
             Player.setPosition(sf::Vector2f(sf::Mouse::getPosition(window)));
-            Player.setSize(Player.getSize() + IncreaseScale);
-        }
-
-        if (!CurrentlyDrawing)
-        {
-            Player.setSize(Player.getSize() - IncreaseScale);
+            BackgroundTexture.draw(Player);
         }
 
 
 
+        BackgroundTexture.display(); // actialy display to consol
 
-
+        window.draw(CanvasSprite);
 
         window.clear();
         window.draw(Player);
