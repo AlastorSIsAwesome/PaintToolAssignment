@@ -13,8 +13,8 @@ void ResizeRect(sf::RectangleShape& _rect, sf::Vector2f _mouse)
 
 	sf::Vector2f _reSize;
 
-	_reSize.y = (_mouse.y - _rect.getOrigin().y);
-	_reSize.x = (_mouse.x - _rect.getOrigin().x);
+	_reSize.y = (_mouse.y - _rect.getPosition().y);
+	_reSize.x = (_mouse.x - _rect.getPosition().x);
 	//float _cSquared = ((_a*_a) + (_b*_b));
 
 	// a = y2 - y1 ... b = x2 - x1 ... c = sqrt(sqr(a) + sqr(b))

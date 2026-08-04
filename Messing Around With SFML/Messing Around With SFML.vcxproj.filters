@@ -21,9 +21,15 @@
     <ClCompile Include="ShapeMath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cUIElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ShapeMath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIElement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

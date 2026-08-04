@@ -146,10 +146,12 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="cUIElement.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ShapeMath.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cUIElement.h" />
     <ClInclude Include="ShapeMath.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

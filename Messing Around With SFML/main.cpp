@@ -8,7 +8,7 @@ int main()
 
 
     sf::RenderWindow window(sf::VideoMode({ 1280, 720 }), "ALASTOR SPHERE RETURNS");
-    sf::RectangleShape Player({ 100.f, 100.f });
+    sf::RectangleShape Player({ 10.f, 10.f });
     
     // Texture Setting
     sf::Texture PlayerTexture;
@@ -21,6 +21,8 @@ int main()
 
     bool CurrentlyDrawing = false;
     bool CurrentlyResizing = false;
+    bool BeginResizing = false;
+    bool FinishedResizing = false;
 
    // pointer array to keep track of shapes
    // sf::Shape* pShapeArray = new sf::Shape*[0];
@@ -30,9 +32,11 @@ int main()
     sf::Vector2f IncreaseScale(1.f, 1.f);
 
 
-    sf::RenderTexture; 
-
     int numOfRects = 0;
+
+    numOfRects++;
+    sf::RectangleShape Testing(IncreaseScale);
+    Testing.setFillColor(sf::Color::White);
 
     while (window.isOpen())
     {
@@ -54,11 +58,12 @@ int main()
             // check if drawing/resizing
             if (const auto* keyPressed = event->getIf < sf::Event::MouseButtonPressed>())
             {
-                CurrentlyResizing = true;
+                BeginResizing = true;
             }
 
             if (const auto* keyPressed = event->getIf < sf::Event::MouseButtonReleased>())
             {
+                FinishedResizing = true;
                 CurrentlyResizing = false;
             }
            
@@ -75,12 +80,36 @@ int main()
         }
 
 
+
+        //
+        // player presses down
+        // create square with origin of inital click positon
+        // while player's mouse is held down, resize square
+        // once player releaces mouse, save that rectangle
+        //
+
+
+        if (BeginResizing)
+        {
+
+            Player.setPosition(sf::Vector2f(sf::Mouse::getPosition(window)));
+
+            BeginResizing = false;
+            CurrentlyResizing = true;
+        }
+
+
         if (CurrentlyResizing)
         {
-            numOfRects++;
-            sf::RectangleShape Testing;
+            
             ResizeRect(Player, (sf::Vector2f(sf::Mouse::getPosition(window))));
+            //BackgroundTexture.draw(Player);
+        }
+
+        if (FinishedResizing)
+        {
             BackgroundTexture.draw(Player);
+            FinishedResizing = false;
         }
 
         if (CurrentlyDrawing)
@@ -91,11 +120,12 @@ int main()
 
 
 
-        BackgroundTexture.display(); // actialy display to consol
-
-        window.draw(CanvasSprite);
+       // actialy display to consol
 
         window.clear();
+        
+        BackgroundTexture.display();
+        window.draw(CanvasSprite);
         window.draw(Player);
         window.display();
     }
