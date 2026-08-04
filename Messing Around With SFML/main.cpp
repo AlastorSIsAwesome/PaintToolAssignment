@@ -51,6 +51,7 @@ int main()
                 // update the veiw to the new sive of the window
                 sf::FloatRect visibleArea({ 0.f, 0.f }, sf::Vector2f(resized->size));
                 window.setView(sf::View(visibleArea));
+                // resize rendertexture
             }
 
 
