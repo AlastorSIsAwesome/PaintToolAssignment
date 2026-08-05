@@ -2,10 +2,16 @@
 
 #include "ShapeMath.h"
 
+#include "cButton.h"
+
+#include "cFileInterface.h"
+
+#include <vector>
 
 int main()
 {
 
+    cFileInterface g_FileInterface;
 
     sf::RenderWindow window(sf::VideoMode({ 1280, 720 }), "ALASTOR SPHERE RETURNS");
     sf::RectangleShape Player({ 10.f, 10.f });
@@ -38,6 +44,18 @@ int main()
     sf::RectangleShape Testing(IncreaseScale);
     Testing.setFillColor(sf::Color::White);
 
+
+    int g_ButtonCount = 2;
+
+    std::vector<cButton> g_Buttons;
+
+    for (int i = 0; i < g_ButtonCount; i++)
+    {
+        cButton newButton({ 80, 34.f * i }, sf::Color::Blue);
+        g_Buttons.push_back(newButton);
+    }
+
+
     while (window.isOpen())
     {
         while (const std::optional event = window.pollEvent()) // checks if the window is open
@@ -52,6 +70,7 @@ int main()
                 sf::FloatRect visibleArea({ 0.f, 0.f }, sf::Vector2f(resized->size));
                 window.setView(sf::View(visibleArea));
                 // resize rendertexture
+               // BackgroundTexture.resize(window.getSize());
             }
 
 
@@ -59,13 +78,29 @@ int main()
             // check if drawing/resizing
             if (const auto* keyPressed = event->getIf < sf::Event::MouseButtonPressed>())
             {
-                BeginResizing = true;
+                for (int i = 0; i < g_ButtonCount ; i++)
+                {
+                    if (g_Buttons[i].m_ButtonShape.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window))))
+                    {
+                        if (i == 0)
+                        {
+                            g_FileInterface.LoadFile(&BackgroundTexture);
+
+                            Player.setTexture(&BackgroundTexture.getTexture()); // doesn't save yet...
+                        }
+                        g_Buttons[i].Update();
+                    }
+                }
+
+
+
+               // BeginResizing = true;
             }
 
             if (const auto* keyPressed = event->getIf < sf::Event::MouseButtonReleased>())
             {
-                FinishedResizing = true;
-                CurrentlyResizing = false;
+               // FinishedResizing = true;
+               // CurrentlyResizing = false;
             }
            
             // check if trying to exit
@@ -125,7 +160,13 @@ int main()
 
         window.clear();
         
+        for (int i = 0; i < g_ButtonCount;  i++)
+        {
+            window.draw(g_Buttons[i].m_ButtonShape);
+        }
+
         BackgroundTexture.display();
+
         window.draw(CanvasSprite);
         window.draw(Player);
         window.display();

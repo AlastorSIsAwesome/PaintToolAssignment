@@ -146,11 +146,15 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="cButton.cpp" />
+    <ClCompile Include="cFileInterface.cpp" />
     <ClCompile Include="cUIElement.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ShapeMath.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cButton.h" />
+    <ClInclude Include="cFileInterface.h" />
     <ClInclude Include="cUIElement.h" />
     <ClInclude Include="ShapeMath.h" />
   </ItemGroup>
