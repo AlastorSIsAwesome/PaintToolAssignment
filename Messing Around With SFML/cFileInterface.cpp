@@ -27,9 +27,9 @@ void cFileInterface::LoadFile(sf::RenderTexture* _texture)
 
 		COMDLG_FILTERSPEC rgSpec[] =
 		{
+			{szALL, L"*.*"},
 			{szJPG, L"*.jpg;*.jpeg"},
-			{szBMP, L"*.bmp"},
-			{szALL, L"*.*"}
+			{szBMP, L"*.bmp"}
 		};
 
 		pFileOpen->SetFileTypes(3, rgSpec);
@@ -57,7 +57,7 @@ void cFileInterface::LoadFile(sf::RenderTexture* _texture)
 						_texture->draw(newSprite);
 						_texture->display();
 
-						MessageBoxW(NULL, L"Image oaded Successfuly!", L"Success!", MB_OK);
+						MessageBoxW(NULL, L"Image loaded Successfuly!", L"Success!", MB_OK);
 						CoTaskMemFree(pszFilePath);
 
 					}
