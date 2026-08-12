@@ -3,10 +3,10 @@
 
 /// <summary>
 /// KEY:  
-/// <para>0-9 Testing,</para>
-/// <para>10-19 Files,</para>
-/// <para>20-29 Pen Styles,</para>
-/// <para>30-39 Shape Tools</para>
+/// <para>0-10 Testing,</para>
+/// <para> 11-19 Files,</para>
+/// <para> 21-29 Pen Styles,</para>
+/// <para> 31-39 Shape Tools</para>
 /// </summary>
 enum ButtonRole
 {
@@ -17,10 +17,15 @@ enum ButtonRole
 	FileLoadButton = 12,
 
 	// pen tools
-
+	PenCircleButton = 21,
+	PenSquareButton = 22,
+	PenTriangleButton = 23,
 
 	// Shape tools
-
+	ShapeCircleButton = 31,
+	ShapeSquareButton = 32,
+	ShapeTriangleButton = 33,
+	ShapeLineButton = 34,
 
 
 };

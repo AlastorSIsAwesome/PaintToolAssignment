@@ -15,5 +15,6 @@ cButton::~cButton()
 
 void cButton::Update()
 {
-	printf("Button %s was Clicked", m_ButtonRole);
+	printf("Button was Clicked");
+
 }
