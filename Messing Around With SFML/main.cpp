@@ -199,3 +199,95 @@ int main()
 
 
 */
+
+
+/*
+
+TODO:
+
+
+
+Mouse-based drawing
+• The tool must include the ability to draw shapes with the mouse. These shapes are
+listed under Required Shapes, below.
+• The mouse must allow for click-to-hold; shapes may not be ‘placed’ onto the
+canvas.
+• Shapes must be able to be resized while the user holds down the mouse button.
+Scaling these shapes from the top left is expected.
+• Shapes must persist on the canvas after they have been drawn.
+
+
+
+
+he following shapes are required:
+• Boxes
+• Ellipses
+• Lines
+• Lines must be able to be adjusted in thickness for this feature to be fully
+implemented.
+
+
+
+
+A simple persistent menu must be always accessible, to allow the user to change the
+current tool. This menu should allow the user to:
+• Change the current tool (i.e., change from box drawing to ellipse drawing)
+• Change the fill colour of the shape to any of the basic implemented SFML colours,
+under sf::Color.
+• Change the width of the selected tool.
+• For the Line object, this applies to the line itself. For other shapes – e.g., Box
+or Ellipse – this applies to the outline of the shape.
+
+
+
+
+
+
+
+
+Addons:
+
+
+
+Saving and loading files
+• Images must be able to be saved out to the file system. This may make use of a file dialog or
+save directly to the disk.
+• Saved images must save out correctly (with correct extension attached) to minimise any
+issues the user may have.
+• Image loading must make use of a file dialog. This system should allow the user to ‘open’ a
+file, and have it be displayed proportionally in the window. The image must not stretch or be
+manipulated in any way when opening the file in the paint tool.
+
+
+
+The polygon tool is a system for drawing n-gon shapes within the paint tool. It must allow the
+user to draw custom shapes. Multiple approaches can be taken to this.
+• The tool may need to make use of multiple inputs (i.e., click with the left mouse button to
+create points, right-click to connect them); this solution is appropriate. Other approaches
+may be taken, if a completed polygon is created.
+
+
+The stamp tool should allow the user to load a file through the image dialog, then ‘stamp’ it
+onto the canvas.
+• This image may be resized to fit the canvas, but it should not be modified (i.e. cropped, or
+disproportionately scaled)
+• This tool should allow the user to place multiple images around the window
+
+
+The user should be able to change the
+colour of the tools, using a colour dialog
+(see example image) This image should
+include a similar gradient, to allow users
+to click-to-select their colour from a wide
+range.
+•
+• This tool should apply to all other tools,
+i.e., circle / square / line etc.
+• This tool does not need to apply to the
+stamp tool, or file save / loading.
+
+
+
+
+
+*/
