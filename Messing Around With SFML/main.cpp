@@ -38,16 +38,9 @@ int main()
     sf::Vector2f IncreaseScale(1.f, 1.f);
 
 
-    int numOfRects = 0;
-
-    numOfRects++;
-    sf::RectangleShape Testing(IncreaseScale);
-    Testing.setFillColor(sf::Color::White);
-
-
     int g_ButtonCount = 2;
 
-    std::vector<cButton> g_Buttons;
+    std::vector<cButton> g_Buttons; // vector wiht all vertexes
 
     for (int i = 0; i < g_ButtonCount; i++)
     {
@@ -78,9 +71,9 @@ int main()
             // check if drawing/resizing
             if (const auto* keyPressed = event->getIf < sf::Event::MouseButtonPressed>())
             {
-                for (int i = 0; i < g_ButtonCount ; i++)
+                for (int i = 0; i < g_ButtonCount ; i++) //Checks every button to see if it was pressed
                 {
-                    if (g_Buttons[i].m_ButtonShape.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window))))
+                    if (g_Buttons[i].m_ButtonShape.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window)))) // compair bounds of the button with the current mouse position 
                     {
                         if (i == 0)
                         {

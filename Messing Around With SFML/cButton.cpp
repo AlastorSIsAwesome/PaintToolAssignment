@@ -1,10 +1,12 @@
 #include "cButton.h"
 
-cButton::cButton(sf::Vector2f _position, sf::Color _color)
+cButton::cButton(sf::Vector2f _position, sf::Color _color, ButtonRole _role)
 {
 	m_ButtonShape.setPosition(_position);
 	m_ButtonShape.setSize({ 95,105 });
 	m_ButtonShape.setFillColor(_color);
+
+	m_ButtonRole = _role;
 }
 
 cButton::~cButton()
@@ -13,5 +15,5 @@ cButton::~cButton()
 
 void cButton::Update()
 {
-	printf("Button was Clicked");
+	printf("Button %s was Clicked", m_ButtonRole);
 }
