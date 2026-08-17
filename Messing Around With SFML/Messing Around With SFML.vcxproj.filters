@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Buttons">
+      <UniqueIdentifier>{f027d133-560a-41f9-ab90-f3115ce9043a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ButtonImplimentation">
+      <UniqueIdentifier>{69688cb6-dcdb-410a-90f5-ac8fb3054128}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -24,11 +30,11 @@
     <ClCompile Include="cUIElement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="cFileInterface.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cButton.cpp">
+      <Filter>Source Files\ButtonImplimentation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -38,11 +44,11 @@
     <ClInclude Include="cUIElement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cButton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="cFileInterface.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cButton.h">
+      <Filter>Header Files\Buttons</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

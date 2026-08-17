@@ -3,29 +3,29 @@
 
 /// <summary>
 /// KEY:  
-/// <para>0-10 Testing,</para>
-/// <para> 11-19 Files,</para>
-/// <para> 21-29 Pen Styles,</para>
-/// <para> 31-39 Shape Tools</para>
+/// <para> 0 Defaut,</para>
+/// <para> 1-2 Files,</para>
+/// <para> 3-5 Pen Styles,</para>
+/// <para> 6-9 Shape Tools</para>
 /// </summary>
 enum ButtonRole
 {
 	DefaultButton = 0, // default
 
-	//1 Save and load files 
-	FileSaveButton = 11,
-	FileLoadButton = 12,
+	//Save and load files 
+	FileSaveButton,
+	FileLoadButton,
 
 	// pen tools
-	PenCircleButton = 21,
-	PenSquareButton = 22,
-	PenTriangleButton = 23,
+	PenCircleButton,
+	PenSquareButton,
+	PenTriangleButton,
 
 	// Shape tools
-	ShapeCircleButton = 31,
-	ShapeSquareButton = 32,
-	ShapeTriangleButton = 33,
-	ShapeLineButton = 34,
+	ShapeCircleButton,
+	ShapeSquareButton,
+	ShapeTriangleButton,
+	ShapeLineButton,
 
 
 };
@@ -33,16 +33,28 @@ enum ButtonRole
 class cButton
 {
 private:
-	ButtonRole m_ButtonRole = DefaultButton;
 protected:
+	ButtonRole m_ButtonRole = DefaultButton;
+	
 public:
-
-
 
 	sf::RectangleShape m_ButtonShape;
 
+	
+
 	cButton(sf::Vector2f _position, sf::Color _color, ButtonRole _role);
 	~cButton();
+
+	inline void SetButtonRole(ButtonRole _role) // inline bc its small
+	{
+		m_ButtonRole = _role;
+	}
+
+	inline ButtonRole GetButtonRole() // inline bc its small
+	{
+		return m_ButtonRole;
+	}
+
 
 	void Update();
 

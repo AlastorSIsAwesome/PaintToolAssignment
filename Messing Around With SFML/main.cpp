@@ -25,26 +25,30 @@ int main()
     sf::RenderTexture BackgroundTexture{ window.getSize() };
     sf::Sprite CanvasSprite(BackgroundTexture.getTexture());
 
+    //delete at some point
     bool CurrentlyDrawing = false;
     bool CurrentlyResizing = false;
     bool BeginResizing = false;
     bool FinishedResizing = false;
 
-   // pointer array to keep track of shapes
-   // sf::Shape* pShapeArray = new sf::Shape*[0];
 
-   // sf::Shape test[1] = ;
+    bool g_PressingMouse = 0;
+
+    
+    ButtonRole g_CurrentButton = DefaultButton;
+
+
 
     sf::Vector2f IncreaseScale(1.f, 1.f);
 
 
-    int g_ButtonCount = 2;
+    int g_ButtonCount = 9;
 
     std::vector<cButton> g_Buttons; // vector wiht all vertexes
 
     for (int i = 0; i < g_ButtonCount; i++)
     {
-        cButton newButton({ 80, 34.f * i }, sf::Color::Blue);
+        cButton newButton({ 55.f * i, 20.f }, sf::Color::Blue, static_cast<ButtonRole>(i+1)); // creates one of each button type excluding default
         g_Buttons.push_back(newButton);
     }
 
@@ -68,42 +72,27 @@ int main()
 
 
 
-            // check if drawing/resizing
+            // check if pressing a mouse button
             if (const auto* keyPressed = event->getIf < sf::Event::MouseButtonPressed>())
             {
+                g_PressingMouse = true;
+
                 for (int i = 0; i < g_ButtonCount ; i++) //Checks every button to see if it was pressed
                 {
                     if (g_Buttons[i].m_ButtonShape.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window)))) // compair bounds of the button with the current mouse position 
                     {
-                        if (i == 0)
-                        {
-                            g_FileInterface.LoadFile(&BackgroundTexture);
-
-                            Player.setTexture(&BackgroundTexture.getTexture()); // doesn't save yet...
-                        }
+                        g_CurrentButton = g_Buttons[i].GetButtonRole();
                         g_Buttons[i].Update();
                     }
                 }
-
-
-
-               // BeginResizing = true;
             }
 
             if (const auto* keyPressed = event->getIf < sf::Event::MouseButtonReleased>())
             {
-               // FinishedResizing = true;
-               // CurrentlyResizing = false;
+                g_PressingMouse = false;
             }
            
-            // check if trying to exit
-            if (const auto* keypressed = event->getIf<sf::Event::KeyPressed>())
-            {
-                if (keypressed->scancode == sf::Keyboard::Scan::Escape)
-                {
-                    printf("You are trying to exit");
-                }
-            }
+
 
 
         }
@@ -149,6 +138,67 @@ int main()
 
 
 
+        // switch case to check which button is active right now
+        switch (g_CurrentButton)
+        {
+            //file buttons
+        case FileSaveButton:
+        {
+            break;
+        }
+        case FileLoadButton:
+        {
+            g_FileInterface.LoadFile(&BackgroundTexture);
+            Player.setTexture(&BackgroundTexture.getTexture());
+
+            break;
+        }
+
+        // pen buttons
+        case PenCircleButton:
+        {
+            break;
+        }
+        case PenSquareButton:
+        {
+            break;
+        }
+        case PenTriangleButton:
+        {
+            break;
+        }
+
+        // shape buttons
+        case ShapeCircleButton:
+        {
+            break;
+        }
+        case ShapeSquareButton:
+        {
+            break;
+        }
+        case ShapeTriangleButton:
+        {
+            break;
+        }
+        case ShapeLineButton:
+        {
+            break;
+        }
+
+        case DefaultButton: // follow through because the default button does nothing
+        default:
+            break;
+        }
+
+
+
+
+
+
+
+
+
        // actialy display to consol
 
         window.clear();
@@ -190,6 +240,19 @@ int main()
                 sf::RectangleShape(ResizeRect({ mousePosition.x - 0.f, mousePosition.y - 0.f })); //double check this later
 
 
+
+
+
+
+
+                            // check if trying to exit
+            if (const auto* keypressed = event->getIf<sf::Event::KeyPressed>())
+            {
+                if (keypressed->scancode == sf::Keyboard::Scan::Escape)
+                {
+                    printf("You are trying to exit");
+                }
+            }
 
 */
 
