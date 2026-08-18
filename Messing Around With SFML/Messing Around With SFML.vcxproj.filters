@@ -36,6 +36,9 @@
     <ClCompile Include="cButton.cpp">
       <Filter>Source Files\ButtonImplimentation</Filter>
     </ClCompile>
+    <ClCompile Include="cDrawButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ShapeMath.h">
@@ -49,6 +52,12 @@
     </ClInclude>
     <ClInclude Include="cButton.h">
       <Filter>Header Files\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomLibrary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cDrawButton.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -23,6 +23,14 @@ Mail : alastor.spear@mds.ac.nz
 #include <vector>
 
 
+enum ResizeStates
+{
+    SetOrigin,
+    ActivelyResizing,
+    FinishedResizing,
+};
+
+
 
 int main()
 {
@@ -42,7 +50,7 @@ int main()
     Player.setTexture(&PlayerTexture);
 
     // gets size of window and sets drawable area to that
-    sf::RenderTexture BackgroundTexture(window.getSize()); // (window.getSize().x, window.getSize().y - 100.f)
+    sf::RenderTexture BackgroundTexture({1280, 620}); // (window.getSize().x, window.getSize().y - 100.f)
     sf::Sprite CanvasSprite(BackgroundTexture.getTexture());
 
 
@@ -50,8 +58,11 @@ int main()
 
     
     ButtonRole g_CurrentButton = DefaultButton;
-    bool g_StartResizing = true;
+    bool g_StartResizing = false;
+    bool g_CurrentlyResizing = false;
     bool g_FinishedResizing = false;
+
+    ResizeStates g_ResizeState = SetOrigin;
 
 
     sf::Vector2f IncreaseScale(1.f, 1.f);
@@ -63,7 +74,7 @@ int main()
 
     for (int i = 0; i < g_ButtonCount; i++)
     {
-        cButton NewButton({ 55.f * i, 20.f }, sf::Color::Blue, static_cast<ButtonRole>(i+1)); // creates one of each button type excluding default
+        cButton NewButton({ 1200.f , 55.f * i }, sf::Color::Blue, static_cast<ButtonRole>(i+1)); // creates one of each button type excluding default
         g_Buttons.push_back(NewButton);
     }
 
@@ -98,6 +109,11 @@ int main()
                     {
                         g_CurrentButton = g_Buttons[i].GetButtonRole();
                         g_Buttons[i].Update();
+
+                        if (i == 7)
+                        {
+                            g_StartResizing = true;
+                        }
                     }
                 }
             }
@@ -178,22 +194,60 @@ int main()
 
 
 
-            if (g_PressingMouse)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            switch (g_ResizeState)
             {
-                if (g_StartResizing) // for the begininbg
+            case SetOrigin:
+            {
+                if (g_PressingMouse) // on first mouse press
                 {
-                    RectDrawTool.setPosition(sf::Vector2f(sf::Mouse::getPosition(window))); //creates rectangle with the origin of the mouse's current position
-                    g_StartResizing = false;
+                    ResizeRect(RectDrawTool, sf::Vector2f(sf::Mouse::getPosition(window)));
+                   // RectDrawTool.setPosition(sf::Vector2f(sf::Mouse::getPosition(window))); //creates rectangle with the origin of the mouse's current position
+                    //BackgroundTexture.draw(RectDrawTool);
+                    g_ResizeState = ActivelyResizing;
+
                 }
-                else // actively resizing
+
+               break;
+            }
+            case ActivelyResizing:
+            {
+                if (!g_PressingMouse)
+                {
+                    g_ResizeState = FinishedResizing; // mouse has lifted up, resizing has finished
+                    
+                }
+                else
                 {
                     ResizeRect(RectDrawTool, (sf::Vector2f(sf::Mouse::getPosition(window))));
+                   // BackgroundTexture.draw(RectDrawTool);
                 }
+                break;
             }
-            else
+            case FinishedResizing:
             {
+                BackgroundTexture.draw(RectDrawTool);
 
+                break;
             }
+            default:
+                break;
+            }
+
+
             
 
 
@@ -254,19 +308,6 @@ int main()
                     CurrentlyDrawing = true;
                 }
             }
-
-
-
-
-            // create and resize shape
-
-            while (CurrentlyDrawing)
-            {
-                // this may create thousands of shapes so be careful
-
-                //current mouse position
-                sf::Vector2i mousePosition = sf::Mouse::getPosition();
-                sf::RectangleShape(ResizeRect({ mousePosition.x - 0.f, mousePosition.y - 0.f })); //double check this later
 
 
 
