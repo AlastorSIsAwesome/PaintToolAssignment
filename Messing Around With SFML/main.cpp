@@ -1,3 +1,17 @@
+/*******************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2026 Media Design School at Strayer
+File Name : [main.cpp]
+Description : [One line description of what is the file is for]
+Author : [Alastor Spear]
+Mail : alastor.spear@mds.ac.nz
+*******************************/
+
+
+
 #include <SFML/Graphics.hpp>
 
 #include "ShapeMath.h"
@@ -8,12 +22,18 @@
 
 #include <vector>
 
+
+
 int main()
 {
 
     cFileInterface g_FileInterface;
 
-    sf::RenderWindow window(sf::VideoMode({ 1280, 720 }), "ALASTOR SPHERE RETURNS");
+    sf::RenderWindow window(sf::VideoMode({ 1280, 720 }), "Paint Tool");
+
+    sf::RectangleShape RectDrawTool({ 20.f, 20.f });
+    RectDrawTool.setFillColor(sf::Color::White);
+
     sf::RectangleShape Player({ 10.f, 10.f });
     
     // Texture Setting
@@ -22,21 +42,16 @@ int main()
     Player.setTexture(&PlayerTexture);
 
     // gets size of window and sets drawable area to that
-    sf::RenderTexture BackgroundTexture{ window.getSize() };
+    sf::RenderTexture BackgroundTexture(window.getSize()); // (window.getSize().x, window.getSize().y - 100.f)
     sf::Sprite CanvasSprite(BackgroundTexture.getTexture());
-
-    //delete at some point
-    bool CurrentlyDrawing = false;
-    bool CurrentlyResizing = false;
-    bool BeginResizing = false;
-    bool FinishedResizing = false;
 
 
     bool g_PressingMouse = 0;
 
     
     ButtonRole g_CurrentButton = DefaultButton;
-
+    bool g_StartResizing = true;
+    bool g_FinishedResizing = false;
 
 
     sf::Vector2f IncreaseScale(1.f, 1.f);
@@ -48,8 +63,8 @@ int main()
 
     for (int i = 0; i < g_ButtonCount; i++)
     {
-        cButton newButton({ 55.f * i, 20.f }, sf::Color::Blue, static_cast<ButtonRole>(i+1)); // creates one of each button type excluding default
-        g_Buttons.push_back(newButton);
+        cButton NewButton({ 55.f * i, 20.f }, sf::Color::Blue, static_cast<ButtonRole>(i+1)); // creates one of each button type excluding default
+        g_Buttons.push_back(NewButton);
     }
 
 
@@ -100,41 +115,11 @@ int main()
 
 
         //
-        // player presses down
-        // create square with origin of inital click positon
-        // while player's mouse is held down, resize square
-        // once player releaces mouse, save that rectangle
+
         //
 
 
-        if (BeginResizing)
-        {
-
-            Player.setPosition(sf::Vector2f(sf::Mouse::getPosition(window)));
-
-            BeginResizing = false;
-            CurrentlyResizing = true;
-        }
-
-
-        if (CurrentlyResizing)
-        {
-            
-            ResizeRect(Player, (sf::Vector2f(sf::Mouse::getPosition(window))));
-            //BackgroundTexture.draw(Player);
-        }
-
-        if (FinishedResizing)
-        {
-            BackgroundTexture.draw(Player);
-            FinishedResizing = false;
-        }
-
-        if (CurrentlyDrawing)
-        {
-            Player.setPosition(sf::Vector2f(sf::Mouse::getPosition(window)));
-            BackgroundTexture.draw(Player);
-        }
+       
 
 
 
@@ -144,6 +129,7 @@ int main()
             //file buttons
         case FileSaveButton:
         {
+            g_CurrentButton = DefaultButton;
             break;
         }
         case FileLoadButton:
@@ -151,6 +137,7 @@ int main()
             g_FileInterface.LoadFile(&BackgroundTexture);
             Player.setTexture(&BackgroundTexture.getTexture());
 
+            g_CurrentButton = DefaultButton;
             break;
         }
 
@@ -161,6 +148,13 @@ int main()
         }
         case PenSquareButton:
         {
+            if (g_PressingMouse)
+            {
+                RectDrawTool.setPosition(sf::Vector2f(sf::Mouse::getPosition(window)));
+                BackgroundTexture.draw(RectDrawTool);
+            }
+
+
             break;
         }
         case PenTriangleButton:
@@ -175,6 +169,36 @@ int main()
         }
         case ShapeSquareButton:
         {
+
+            // player presses down
+            // create square with origin of inital click positon
+            // while player's mouse is held down, resize square
+            // once player releaces mouse, save that rectangle
+
+
+
+
+            if (g_PressingMouse)
+            {
+                if (g_StartResizing) // for the begininbg
+                {
+                    RectDrawTool.setPosition(sf::Vector2f(sf::Mouse::getPosition(window))); //creates rectangle with the origin of the mouse's current position
+                    g_StartResizing = false;
+                }
+                else // actively resizing
+                {
+                    ResizeRect(RectDrawTool, (sf::Vector2f(sf::Mouse::getPosition(window))));
+                }
+            }
+            else
+            {
+
+            }
+            
+
+
+    
+
             break;
         }
         case ShapeTriangleButton:
@@ -203,7 +227,7 @@ int main()
 
         window.clear();
         
-        for (int i = 0; i < g_ButtonCount;  i++)
+        for (int i = 0; i < g_ButtonCount;  i++) // draw every button
         {
             window.draw(g_Buttons[i].m_ButtonShape);
         }
@@ -215,6 +239,11 @@ int main()
         window.display();
     }
 }
+
+
+
+
+
 
 
 /*
@@ -275,7 +304,7 @@ Scaling these shapes from the top left is expected.
 
 
 
-he following shapes are required:
+the following shapes are required:
 • Boxes
 • Ellipses
 • Lines
