@@ -37,10 +37,7 @@ protected:
 	ButtonRole m_ButtonRole = DefaultButton;
 	
 public:
-
 	sf::RectangleShape m_ButtonShape;
-
-	
 
 	cButton(sf::Vector2f _position, sf::Color _color, ButtonRole _role);
 	~cButton();
@@ -56,7 +53,7 @@ public:
 	}
 
 
-	void Update();
+	 void Update(); // will cause issues for the main.cpp
 
 };
 

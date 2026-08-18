@@ -42,13 +42,6 @@ int main()
     sf::RectangleShape RectDrawTool({ 20.f, 20.f });
     RectDrawTool.setFillColor(sf::Color::White);
 
-    sf::RectangleShape Player({ 10.f, 10.f });
-    
-    // Texture Setting
-    sf::Texture PlayerTexture;
-    PlayerTexture.loadFromFile("textures/alastorsphere.png");
-    Player.setTexture(&PlayerTexture);
-
     // gets size of window and sets drawable area to that
     sf::RenderTexture BackgroundTexture({1280, 620}); // (window.getSize().x, window.getSize().y - 100.f)
     sf::Sprite CanvasSprite(BackgroundTexture.getTexture());
@@ -114,6 +107,10 @@ int main()
                         {
                             g_StartResizing = true;
                         }
+                        else
+                        {
+                            g_StartResizing = false;
+                        }
                     }
                 }
             }
@@ -121,6 +118,8 @@ int main()
             if (const auto* keyPressed = event->getIf < sf::Event::MouseButtonReleased>())
             {
                 g_PressingMouse = false;
+                g_FinishedResizing = true;
+                g_CurrentlyResizing = false;
             }
            
 
@@ -151,7 +150,7 @@ int main()
         case FileLoadButton:
         {
             g_FileInterface.LoadFile(&BackgroundTexture);
-            Player.setTexture(&BackgroundTexture.getTexture());
+            //Player.setTexture(&BackgroundTexture.getTexture()); // fix this???
 
             g_CurrentButton = DefaultButton;
             break;
@@ -185,6 +184,9 @@ int main()
         }
         case ShapeSquareButton:
         {
+            // TODO: RESIZE TOOL
+            // RIGHT NOW IM TOO STRESSED TO DEAL WITH IT ;-;
+
 
             // player presses down
             // create square with origin of inital click positon
@@ -193,59 +195,39 @@ int main()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            switch (g_ResizeState)
+            if (g_StartResizing)
             {
-            case SetOrigin:
-            {
-                if (g_PressingMouse) // on first mouse press
-                {
-                    ResizeRect(RectDrawTool, sf::Vector2f(sf::Mouse::getPosition(window)));
-                   // RectDrawTool.setPosition(sf::Vector2f(sf::Mouse::getPosition(window))); //creates rectangle with the origin of the mouse's current position
-                    //BackgroundTexture.draw(RectDrawTool);
-                    g_ResizeState = ActivelyResizing;
-
-                }
-
-               break;
+                RectDrawTool.setPosition(sf::Vector2f(sf::Mouse::getPosition(window))); //creates rectangle with the origin of the mouse's current position
+                g_StartResizing = false;
+                g_CurrentlyResizing = true;
             }
-            case ActivelyResizing:
+
+            if (g_CurrentlyResizing)
             {
-                if (!g_PressingMouse)
-                {
-                    g_ResizeState = FinishedResizing; // mouse has lifted up, resizing has finished
-                    
-                }
-                else
-                {
-                    ResizeRect(RectDrawTool, (sf::Vector2f(sf::Mouse::getPosition(window))));
-                   // BackgroundTexture.draw(RectDrawTool);
-                }
-                break;
+                ResizeRect(RectDrawTool, sf::Vector2f(sf::Mouse::getPosition(window)));
             }
-            case FinishedResizing:
+
+            if (g_FinishedResizing)
             {
                 BackgroundTexture.draw(RectDrawTool);
+                g_FinishedResizing = false;
+            }
 
-                break;
-            }
-            default:
-                break;
-            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
 
 
             
@@ -289,7 +271,6 @@ int main()
         BackgroundTexture.display();
 
         window.draw(CanvasSprite);
-        window.draw(Player);
         window.display();
     }
 }
