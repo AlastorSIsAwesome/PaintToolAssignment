@@ -11,7 +11,7 @@ protected:
 
    // sf::Texture m_ButtonTexture = loadFromFile("textures/alastorsphere.png");
 public:
-   // cDrawButton(sf::Vector2f _position, sf::Color _color, ButtonRole _role);
+    cDrawButton(sf::Vector2f _position, sf::Color _color, ButtonRole _role);
     ~cDrawButton();
 
     void SetPenToolSize(sf::Vector2f _size);

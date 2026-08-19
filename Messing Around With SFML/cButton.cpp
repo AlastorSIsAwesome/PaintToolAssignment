@@ -13,6 +13,11 @@ cButton::~cButton()
 {
 }
 
+void cButton::SetTexture(sf::Texture &_texture)
+{
+	m_ButtonShape.setTexture(&_texture);
+}
+
 void cButton::Update()
 {
 	printf("Button was Clicked");

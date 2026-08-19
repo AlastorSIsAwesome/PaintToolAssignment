@@ -16,54 +16,48 @@ Mail : alastor.spear@mds.ac.nz
 
 #include "ShapeMath.h"
 
-#include "cButton.h"
+#include "cDrawButton.h"
+#include "cSizeButton.h"
+#include "cColorButton.h"
 
 #include "cFileInterface.h"
 
 #include <vector>
 
-
-enum ResizeStates
-{
-    SetOrigin,
-    ActivelyResizing,
-    FinishedResizing,
-};
+#include <iostream>
 
 
 
 int main()
 {
-
     cFileInterface g_FileInterface;
 
     sf::RenderWindow window(sf::VideoMode({ 1280, 720 }), "Paint Tool");
 
+    //Default RectDrawTool
     sf::RectangleShape RectDrawTool({ 20.f, 20.f });
     RectDrawTool.setFillColor(sf::Color::White);
 
     // gets size of window and sets drawable area to that
-    sf::RenderTexture BackgroundTexture({1280, 620}); // (window.getSize().x, window.getSize().y - 100.f)
+    sf::RenderTexture BackgroundTexture({1200, 720}); // RenderTexture is smaler than window to account for buttons
     sf::Sprite CanvasSprite(BackgroundTexture.getTexture());
 
-
+    // is true when the player is pressing their mouse
     bool g_PressingMouse = 0;
 
-    
+    // Keeps track of the curren button that is active
     ButtonRole g_CurrentButton = DefaultButton;
+
+    // Booleans needed for the resizing shapes
     bool g_StartResizing = false;
     bool g_CurrentlyResizing = false;
     bool g_FinishedResizing = false;
 
-    ResizeStates g_ResizeState = SetOrigin;
 
-
-    sf::Vector2f IncreaseScale(1.f, 1.f);
-
-
+    /**************************************** BUTTON DECLEARATIONS *********************************************/
     int g_ButtonCount = 9;
+    std::vector<cButton> g_Buttons; // vector of all buttons
 
-    std::vector<cButton> g_Buttons; // vector wiht all vertexes
 
     for (int i = 0; i < g_ButtonCount; i++)
     {
@@ -71,9 +65,27 @@ int main()
         g_Buttons.push_back(NewButton);
     }
 
+    int g_ButtonCount = 1;
+
+    cDrawButton BrushButton({ 1200.f, 55.f * g_ButtonCount }, sf::Color::White, PenButton);
+    sf::Texture ButtonTexture("textures/PaintBrush.png");
+    BrushButton.SetTexture(ButtonTexture);
+
+    g_ButtonCount++;
+    cDrawButton BrushButton({ 1200.f, 55.f * g_ButtonCount }, sf::Color::White, PenButton);
+    sf::Texture ButtonTexture("textures/PaintBrush.png");
+    BrushButton.SetTexture(ButtonTexture);
+
+
+
+
+
+
+
 
     while (window.isOpen())
     {
+          //std::cout << g_CurrentlyResizing << std::endl;
         while (const std::optional event = window.pollEvent()) // checks if the window is open
         {
             if (event->is<sf::Event::Closed>())
@@ -94,22 +106,23 @@ int main()
             // check if pressing a mouse button
             if (const auto* keyPressed = event->getIf < sf::Event::MouseButtonPressed>())
             {
-                g_PressingMouse = true;
+                g_PressingMouse = true; 
 
                 for (int i = 0; i < g_ButtonCount ; i++) //Checks every button to see if it was pressed
                 {
-                    if (g_Buttons[i].m_ButtonShape.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window)))) // compair bounds of the button with the current mouse position 
+                    if (g_Buttons[i].GetButtonObject().getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window)))) // compair bounds of the button with the current mouse position 
                     {
                         g_CurrentButton = g_Buttons[i].GetButtonRole();
                         g_Buttons[i].Update();
 
-                        if (i == 7)
+                        if (i == 7) // 7 is num of the resize button
                         {
                             g_StartResizing = true;
                         }
                         else
                         {
                             g_StartResizing = false;
+                            
                         }
                     }
                 }
@@ -157,11 +170,7 @@ int main()
         }
 
         // pen buttons
-        case PenCircleButton:
-        {
-            break;
-        }
-        case PenSquareButton:
+        case PenButton:
         {
             if (g_PressingMouse)
             {
@@ -172,13 +181,10 @@ int main()
 
             break;
         }
-        case PenTriangleButton:
-        {
-            break;
-        }
+
 
         // shape buttons
-        case ShapeCircleButton:
+        case ShapeEllipseButton:
         {
             break;
         }
@@ -197,48 +203,28 @@ int main()
 
             if (g_StartResizing)
             {
-                RectDrawTool.setPosition(sf::Vector2f(sf::Mouse::getPosition(window))); //creates rectangle with the origin of the mouse's current position
-                g_StartResizing = false;
-                g_CurrentlyResizing = true;
+                if(g_PressingMouse)
+                {
+                    RectDrawTool.setPosition(sf::Vector2f(sf::Mouse::getPosition(window))); //creates rectangle with the origin of the mouse's current position
+                    g_StartResizing = false;
+                    g_CurrentlyResizing = true;
+                }
             }
 
             if (g_CurrentlyResizing)
             {
                 ResizeRect(RectDrawTool, sf::Vector2f(sf::Mouse::getPosition(window)));
+              
             }
 
             if (g_FinishedResizing)
             {
                 BackgroundTexture.draw(RectDrawTool);
                 g_FinishedResizing = false;
+                g_StartResizing = true;
             }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-
-
-            
-
-
-    
-
-            break;
-        }
-        case ShapeTriangleButton:
-        {
             break;
         }
         case ShapeLineButton:
@@ -262,10 +248,10 @@ int main()
        // actialy display to consol
 
         window.clear();
-        
+        window.draw(RectDrawTool);
         for (int i = 0; i < g_ButtonCount;  i++) // draw every button
         {
-            window.draw(g_Buttons[i].m_ButtonShape);
+            window.draw(g_Buttons[i].GetButtonObject());
         }
 
         BackgroundTexture.display();

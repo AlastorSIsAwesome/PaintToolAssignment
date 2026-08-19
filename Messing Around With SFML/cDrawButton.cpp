@@ -1,9 +1,10 @@
 #include "cDrawButton.h"
 
-//cDrawButton::cDrawButton(sf::Vector2f _position, sf::Color _color, ButtonRole _role) 
-//	: 
-//
-//}
+cDrawButton::cDrawButton(sf::Vector2f _position, sf::Color _color, ButtonRole _role) 
+	: cButton(_position, _color, _role) // uses cButton constructor to assign perameters 
+{
+
+}
 
 cDrawButton::~cDrawButton()
 {

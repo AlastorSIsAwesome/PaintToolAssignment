@@ -5,8 +5,9 @@
 /// KEY:  
 /// <para> 0 Defaut,</para>
 /// <para> 1-2 Files,</para>
-/// <para> 3-5 Pen Styles,</para>
+/// <para> 3 Pen</para>
 /// <para> 6-9 Shape Tools</para>
+/// UPDATE
 /// </summary>
 enum ButtonRole
 {
@@ -16,15 +17,12 @@ enum ButtonRole
 	FileSaveButton,
 	FileLoadButton,
 
-	// pen tools
-	PenCircleButton,
-	PenSquareButton,
-	PenTriangleButton,
+	// pen 
+	PenButton,
 
 	// Shape tools
-	ShapeCircleButton,
+	ShapeEllipseButton,
 	ShapeSquareButton,
-	ShapeTriangleButton,
 	ShapeLineButton,
 
 
@@ -42,6 +40,12 @@ public:
 	cButton(sf::Vector2f _position, sf::Color _color, ButtonRole _role);
 	~cButton();
 
+	inline sf::RectangleShape GetButtonObject()
+	{
+		return m_ButtonShape;
+	}
+
+
 	inline void SetButtonRole(ButtonRole _role) // inline bc its small
 	{
 		m_ButtonRole = _role;
@@ -52,8 +56,10 @@ public:
 		return m_ButtonRole;
 	}
 
+	void SetTexture(sf::Texture &_texture); // sets and impliments given texture
 
-	 void Update(); // will cause issues for the main.cpp
+
+	void Update();
 
 };
 
