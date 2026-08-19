@@ -1,3 +1,15 @@
+/*******************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2026 Media Design School at Strayer
+File Name : [cFileInterface.cpp]
+Description : [Implimentation of importing files into the RenderTexture]
+Author : [Alastor Spear]
+Mail : alastor.spear@mds.ac.nz
+*******************************/
+
 #include "cFileInterface.h"
 
 cFileInterface::cFileInterface()

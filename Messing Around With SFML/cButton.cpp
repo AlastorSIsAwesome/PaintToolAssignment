@@ -1,3 +1,15 @@
+/*******************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2026 Media Design School at Strayer
+File Name : [cButton.cpp]
+Description : [Implimentation for the default cButton]
+Author : [Alastor Spear]
+Mail : alastor.spear@mds.ac.nz
+*******************************/
+
 #include "cButton.h"
 
 cButton::cButton(sf::Vector2f _position, sf::Color _color, ButtonRole _role)
