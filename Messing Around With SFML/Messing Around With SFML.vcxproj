@@ -150,6 +150,7 @@
     <ClCompile Include="cColorButton.cpp" />
     <ClCompile Include="cDrawButton.cpp" />
     <ClCompile Include="cFileInterface.cpp" />
+    <ClCompile Include="cShapeButton.cpp" />
     <ClCompile Include="cSizeButton.cpp" />
     <ClCompile Include="cUIElement.cpp" />
     <ClCompile Include="main.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="cColorButton.h" />
     <ClInclude Include="cDrawButton.h" />
     <ClInclude Include="cFileInterface.h" />
+    <ClInclude Include="cShapeButton.h" />
     <ClInclude Include="cSizeButton.h" />
     <ClInclude Include="cUIElement.h" />
     <ClInclude Include="CustomLibrary.h" />

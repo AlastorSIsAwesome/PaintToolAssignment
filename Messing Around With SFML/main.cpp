@@ -70,11 +70,13 @@ int main()
     cDrawButton BrushButton({ 1200.f, 55.f * g_ButtonCount }, sf::Color::White, PenButton);
     sf::Texture ButtonTexture("textures/PaintBrush.png");
     BrushButton.SetTexture(ButtonTexture);
+    g_Buttons.push_back(BrushButton);
 
     g_ButtonCount++;
     cDrawButton BrushButton({ 1200.f, 55.f * g_ButtonCount }, sf::Color::White, PenButton);
     sf::Texture ButtonTexture("textures/PaintBrush.png");
     BrushButton.SetTexture(ButtonTexture);
+    g_Buttons.push_back(BrushButton);
 
 
 
